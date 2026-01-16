@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
-const healthRouter = require("./routes/health.routes");
+const indexRouter = require("./routes/index");
 
 app.use(express.json());
-app.use("/health", healthRouter);
+app.use("/api", indexRouter);
 
 module.exports = app;
