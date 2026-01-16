@@ -1,13 +1,8 @@
 const express = require("express");
 const app = express();
+const healthRouter = require("./routes/health.routes");
 
 app.use(express.json());
-
-app.get("/health", (req, res) => {
-  res.json({
-    status: "ok",
-    message: "server is healthy",
-  });
-});
+app.use("/health", healthRouter);
 
 module.exports = app;
