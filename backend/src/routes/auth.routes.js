@@ -6,4 +6,6 @@ router.get("/test", (req, res) => {
   test(req, res);
 });
 
+router.post("/register", registerUser);
+
 module.exports = router;
