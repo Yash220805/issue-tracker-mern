@@ -31,7 +31,34 @@ async function registerUser(req, res) {
   }
 }
 
+async function loginUser(req, res) {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password)
+      return res
+        .status(400)
+        .json({ message: "email and password are required" });
+
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser)
+      return res.status(401).json({ message: "invalid credentials" });
+
+    const validUser = await bcrypt.compare(password, existingUser.password);
+
+    if (!validUser)
+      return res.status(401).json({ message: "invalid credentials" });
+
+    res.status(200).json({ message: "login successful" });
+  } catch (error) {
+    crossOriginIsolated.error("server error:", error.message);
+    res.status(500).json({ message: "server error" });
+  }
+}
+
 module.exports = {
   test,
   registerUser,
+  loginUser,
 };
