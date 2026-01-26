@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 function test(req, res) {
   res.json({
@@ -50,7 +51,16 @@ async function loginUser(req, res) {
     if (!validUser)
       return res.status(401).json({ message: "invalid credentials" });
 
-    res.status(200).json({ message: "login successful" });
+    const token = jwt.sign(
+      {
+        userId: existingUser._id,
+        role: existingUser.role,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+
+    res.status(200).json({ message: "login successful", token: token });
   } catch (error) {
     crossOriginIsolated.error("server error:", error.message);
     res.status(500).json({ message: "server error" });
