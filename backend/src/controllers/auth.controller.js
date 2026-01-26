@@ -67,8 +67,13 @@ async function loginUser(req, res) {
   }
 }
 
+async function getMe(req, res) {
+  return res.status(200).json(req.user);
+}
+
 module.exports = {
   test,
   registerUser,
   loginUser,
+  getMe,
 };
