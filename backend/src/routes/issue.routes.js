@@ -7,6 +7,7 @@ const {
   createIssue,
   getAllIssues,
   updateIssueStatus,
+  assignIssue,
 } = require("../controllers/issue.controller");
 
 router.post("/", authMiddleware, authorizeRoles("user"), createIssue);
@@ -16,6 +17,12 @@ router.patch(
   authMiddleware,
   authorizeRoles("admin"),
   updateIssueStatus,
+);
+router.patch(
+  "/:id/assign",
+  authMiddleware,
+  authorizeRoles("admin"),
+  assignIssue,
 );
 
 module.exports = router;

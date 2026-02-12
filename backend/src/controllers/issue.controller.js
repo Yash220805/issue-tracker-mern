@@ -1,4 +1,5 @@
 const Issue = require("../models/issue.model");
+const User = require("../models/user.model");
 
 async function createIssue(req, res) {
   try {
@@ -58,4 +59,24 @@ async function updateIssueStatus(req, res) {
   }
 }
 
-module.exports = { createIssue, getAllIssues, updateIssueStatus };
+async function assignIssue(req, res) {
+  try {
+    const issueId = req.params.id;
+    const { adminId } = req.body;
+    if (!adminId) return res.status(400).json({ message: "Bad Request" });
+    const issue = await Issue.findById(issueId);
+    if (!issue) return res.status(404).json({ message: "Issue not found" });
+    const user = await User.findById(adminId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    if (user.role !== "admin")
+      return res.status(400).json({ message: "Bad Request" });
+    issue.assignedTo = adminId;
+    await issue.save();
+    return res.status(200).json({ message: "issue assigned successfully" });
+  } catch (error) {
+    console.error("Assign issue error:", error.message);
+    return res.status(500).json({ message: "Server Error" });
+  }
+}
+
+module.exports = { createIssue, getAllIssues, updateIssueStatus, assignIssue };
