@@ -1,5 +1,6 @@
+import AppRouter from "./app/AppRouter";
 function App() {
-  return <h1>Smart issue tracker</h1>;
+  return <AppRouter />;
 }
 
 export default App;
