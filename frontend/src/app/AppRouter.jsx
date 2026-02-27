@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../features/auth/AuthContext";
+import Login from "../features/auth/Login";
 
 function Dashboard() {
   const { auth } = useContext(AuthContext);
@@ -11,7 +12,7 @@ function Dashboard() {
 function AppRouter() {
   return (
     <Routes>
-      <Route path="/login" element={<h1>login page </h1>} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<h1>register page </h1>} />
       <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
