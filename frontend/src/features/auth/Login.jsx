@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+async function handleSubmit(e) {
+  e.preventDefault();
+  console.log("submitting");
+}
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -7,7 +12,7 @@ export default function Login() {
   console.log("Password:", password);
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <h1>Email:</h1>
         <input
           type="email"
