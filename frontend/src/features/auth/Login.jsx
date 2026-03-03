@@ -1,15 +1,22 @@
 import { useState } from "react";
-
-async function handleSubmit(e) {
-  e.preventDefault();
-  console.log("submitting");
-}
+import { login } from "./authService";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   console.log("Email:", email);
   console.log("Password:", password);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const data = await login(email, password);
+    console.log(data);
+
+    const { token } = data;
+    localStorage.setItem("token", token);
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit}>

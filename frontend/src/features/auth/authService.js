@@ -1,7 +1,7 @@
-import api from "../../api/axios";
+import { api } from "../../api/axios";
 
-async function login() {
-  const response = await api.post("auth/login", { email, password });
+async function login(email, password) {
+  const response = await api.post("auth/login/", { email, password });
   return response.data;
 }
 
