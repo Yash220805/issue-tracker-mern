@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { login } from "./authService";
+import { useContext } from "react";
+import { AuthContext } from "./AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setAuth } = useContext(AuthContext);
 
   console.log("Email:", email);
   console.log("Password:", password);
@@ -15,6 +18,12 @@ export default function Login() {
 
     const { token } = data;
     localStorage.setItem("token", token);
+    setAuth({
+      isAuthenticated: true,
+      user: null,
+      role: null,
+      token: token,
+    });
   }
 
   return (
